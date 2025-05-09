@@ -12,8 +12,8 @@ const userSchema = new Schema(
         lowercase: true,
         minlength: [
           2,
-          "First name is required and must be at least 2 characters",
-        ],
+          "First name is required and must be at least 2 characters"
+        ]
       },
       lastName: {
         type: String,
@@ -22,9 +22,9 @@ const userSchema = new Schema(
         trim: true,
         minlength: [
           2,
-          "Last name is required and must be at least 2 characters",
-        ],
-      },
+          "Last name is required and must be at least 2 characters"
+        ]
+      }
     },
     email: {
       type: String,
@@ -33,22 +33,26 @@ const userSchema = new Schema(
       index: true,
       unique: true,
       lowercase: true,
-      minLength: [4, "Email is required and must be at least 4 characters"],
+      minLength: [4, "Email is required and must be at least 4 characters"]
     },
     password: {
       type: String,
       required: true,
       trim: true,
       select: false,
-      minLength: [5, "Password must be at least 4 characters"],
+      minLength: [5, "Password must be at least 4 characters"]
+    },
+    refreshToken: {
+      type: String,
+      select: false
     },
     socketId: {
       //socket id will be used for live tracking feature
-      type: String,
-    },
+      type: String
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
@@ -62,13 +66,13 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.genAccessToken = function () {
   return jwt.sign({ _id: this._id }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    expiresIn: process.env.ACCESS_TOKEN_EXPIRY
   });
 };
 
 userSchema.methods.genRefreshToken = function () {
   return jwt.sign({ _id: this._id }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRY
   });
 };
 
@@ -77,4 +81,4 @@ userSchema.methods.comparePassword = async function (password) {
   return response;
 };
 
-export const userModel = model("User", userSchema);
+export const userModel = model("user", userSchema);
