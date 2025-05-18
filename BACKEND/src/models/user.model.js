@@ -38,13 +38,9 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      trim: true,
       select: false,
+      trim: true,
       minLength: [5, "Password must be at least 4 characters"]
-    },
-    refreshToken: {
-      type: String,
-      select: false
     },
     socketId: {
       //socket id will be used for live tracking feature

@@ -1,5 +1,7 @@
 import { userModel } from "../models/user.model.js";
 import ApiError from "../utils/apiErrorHandler.js";
+import { refreshTokenModel } from "../models/refreshToken.model.js";
+
 const createUser = async ({ firstName, lastName, email, password }) => {
   if (!firstName || !lastName || !email || !password) {
     throw new ApiError(400, "All fields are required");
@@ -18,21 +20,28 @@ const createUser = async ({ firstName, lastName, email, password }) => {
     email,
     password
   });
-
+  user.password = undefined;
   return user;
 };
+
 const genAccessRefreshTokens = async (userId) => {
   const user = await userModel.findById(userId);
   if (!user) {
     throw new ApiError(500, "No user found");
   }
+
   const accessToken = user.genAccessToken();
   const refreshToken = user.genRefreshToken();
-  user.refreshToken = refreshToken;
-  await user.save();
+
+  await refreshTokenModel.create({
+    userId: user._id,
+    refreshToken
+  });
+
   if (!refreshToken || !accessToken) {
     throw new ApiError(500, "There was a problem while generating tokens");
   }
+
   return { accessToken, refreshToken };
 };
 
