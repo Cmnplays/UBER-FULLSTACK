@@ -111,8 +111,9 @@ const refreshAccessToken = routeHandler(async (req, res) => {
 
   const { accessToken, refreshToken: newRefreshToken } =
     await genAccessRefreshTokens(decoded._id);
-  console.log(refreshToken === newRefreshToken);
+
   refreshTokenInstance.refreshToken = newRefreshToken;
+
   await refreshTokenInstance.save();
   const cookieOptions = {
     httpOnly: true,
