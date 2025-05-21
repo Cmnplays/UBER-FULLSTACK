@@ -18,4 +18,5 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api/user", userRouter);
+app.use("/api/captian", captianRouter);
 export default app;
