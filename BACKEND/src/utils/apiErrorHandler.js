@@ -1,5 +1,11 @@
+import { statusCodes } from "../constants/statusCodes.js";
 class ApiError extends Error {
-  constructor(statusCode = 500, message = "Failure", errors = [], stack = "") {
+  constructor(
+    statusCode = statusCodes.INTERNAL_SERVER_ERROR,
+    message = "Failure",
+    errors = [],
+    stack = ""
+  ) {
     super(message);
     this.name = "ApiError";
     this.statusCode = statusCode;

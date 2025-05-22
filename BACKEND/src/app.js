@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "./routes/user.routes.js";
+import captianRouter from "./routes/captian.routes.js";
 import cookieParser from "cookie-parser";
 const app = express();
 app.use(cors());
@@ -18,5 +19,5 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api/user", userRouter);
-app.use("/api/captian", captianRouter);
+app.use("/api/captain", captianRouter);
 export default app;

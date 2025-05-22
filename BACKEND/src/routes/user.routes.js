@@ -1,13 +1,13 @@
 import express from "express";
 const userRouter = express.Router();
 import { body } from "express-validator";
-import verifyToken from "../middlewares/auth.middleware.js";
+import { userAuth } from "../middlewares/auth.middleware.js";
 import {
   register,
   login,
   getUserProfile,
   logout,
-  refreshAccessToken
+  refreshTokens
 } from "../controller/user.controller.js";
 
 userRouter
@@ -45,7 +45,7 @@ userRouter
     ],
     login
   )
-  .get("/profile", verifyToken, getUserProfile)
-  .post("/refreshToken", refreshAccessToken)
-  .get("/logout", logout);
+  .get("/profile", userAuth, getUserProfile)
+  .post("/refreshToken", refreshTokens)
+  .get("/logout", userAuth, logout);
 export default userRouter;

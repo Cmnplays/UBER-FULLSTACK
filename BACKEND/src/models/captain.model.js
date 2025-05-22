@@ -74,7 +74,8 @@ const captainSchema = new Schema({
     }
   }
 });
-captainSchema.pre("save", async (next) => {
+
+captainSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
@@ -95,7 +96,7 @@ captainSchema.methods.genRefreshToken = function () {
 };
 
 captainSchema.methods.comparePassword = async function (password) {
-  const response = await bcrypt.verify(password, this.password);
+  const response = await bcrypt.compare(password, this.password);
   return response;
 };
-export const captialModel = model("captain", captainSchema);
+export const captainModel = model("captain", captainSchema);
