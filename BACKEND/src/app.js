@@ -3,7 +3,9 @@ import cors from "cors";
 import userRouter from "./routes/user.routes.js";
 import captianRouter from "./routes/captian.routes.js";
 import cookieParser from "cookie-parser";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 const app = express();
+
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -25,4 +27,7 @@ app.use(cookieParser());
 
 app.use("/api/user", userRouter);
 app.use("/api/captain", captianRouter);
+
+app.use(errorHandler);
+
 export default app;

@@ -11,7 +11,6 @@ import { statusCodes } from "../constants/statusCodes.js";
 
 const register = routeHandler(async (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     throw new ApiError(
       statusCodes.BAD_REQUEST,
