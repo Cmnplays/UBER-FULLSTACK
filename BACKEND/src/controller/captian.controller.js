@@ -71,7 +71,7 @@ const login = routeHandler(async (req, res) => {
 
   const result = await captain.comparePassword(password);
   if (!result) {
-    throw new ApiError("Email or password is wrong");
+    throw new ApiError(statusCodes.UNAUTHORIZED, "Email or password is wrong");
   }
   captain.password = undefined;
   const { accessToken, refreshToken } = await genAccessAndRefreshToken(
