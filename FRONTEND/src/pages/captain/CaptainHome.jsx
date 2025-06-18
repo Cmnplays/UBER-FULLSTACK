@@ -1,19 +1,87 @@
-import React from "react";
-import CaptainLogout from "../../components/logout/CaptainLogout";
-import { CaptainDataContext } from "../../context/captain/captainContext";
+import React, { useState, useRef } from "react";
+import CaptainDetails from "../../components/captain/CaptainDetails";
+import { Link } from "react-router-dom";
+import RidePopup from "../../components/captain/RidePopup";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import ConfirmRidePopupPanel from "../../components/captain/ConfirmRidePopupPanel";
 
 const CaptainHome = () => {
-  const { captainData } = React.useContext(CaptainDataContext);
+  const [ridePopupPanel, setRidePopupPanel] = useState(true);
+  const ridePopupPanelRef = useRef(null);
+  const [confirmRidePopupPanel, setConfirmRidePopupPanel] = useState(false);
+  const confirmRidePopupPanelRef = useRef(null);
+  useGSAP(
+    function () {
+      if (ridePopupPanel) {
+        gsap.to(ridePopupPanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(ridePopupPanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [ridePopupPanel]
+  );
 
+  useGSAP(
+    function () {
+      if (confirmRidePopupPanel) {
+        gsap.to(confirmRidePopupPanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(confirmRidePopupPanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [confirmRidePopupPanel]
+  );
   return (
-    <div>
-      <div>
-        <h1 className="font-bold text-2xl">Captain Home page</h1>
-        <div>
-          User name is : {captainData.fullName.firstName}{" "}
-          {captainData.fullName.lastName}{" "}
-        </div>
-        <CaptainLogout />
+    <div className="h-screen">
+      <div className="fixed p-6 top-0 flex items-center justify-between w-screen">
+        <img
+          className="w-16"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
+          alt=""
+        />
+        <Link
+          to="/home"
+          className="h-10 w-10 bg-white flex items-center justify-center rounded-full "
+        >
+          <i className="text-lg font-medium ri-logout-box-r-line"></i>
+        </Link>
+      </div>
+      <div className="h-3/5">
+        <img
+          className="h-full w-full object-cover"
+          src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
+          alt="map"
+        />
+      </div>
+      <div className="h-2/5 p-6">
+        <CaptainDetails />
+      </div>
+      <div
+        ref={ridePopupPanelRef}
+        className="fixed  w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6"
+      >
+        <RidePopup
+          setRidePopupPanel={setRidePopupPanel}
+          setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+        />
+      </div>
+      <div
+        ref={confirmRidePopupPanelRef}
+        className="fixed  w-full z-10 bottom-0 translate-y-full h-screen bg-white px-3 py-6"
+      >
+        <ConfirmRidePopupPanel
+          setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+          setRidePopupPanel={setRidePopupPanel}
+        />
       </div>
     </div>
   );

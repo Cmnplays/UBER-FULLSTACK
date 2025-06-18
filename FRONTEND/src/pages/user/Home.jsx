@@ -2,11 +2,11 @@ import React, { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
-import LocationSearchPanel from "../../components/LocationSearchPanel.jsx";
-import VehiclePanel from "../../components/VehiclePanel.jsx";
-import ConfirmRide from "../../components/ConfirmRide.jsx";
-import WaitForDriverPanel from "../../components/WaitingForDriverPanel.jsx";
-import LookingForDriver from "../../components/LookingForDriver.jsx";
+import LocationSearchPanel from "../../components/user/LocationSearchPanel.jsx";
+import VehiclePanel from "../../components/user/VehiclePanel.jsx";
+import ConfirmRide from "../../components/user/ConfirmRide.jsx";
+import WaitForDriverPanel from "../../components/user/WaitingForDriverPanel.jsx";
+import LookingForDriver from "../../components/user/LookingForDriver.jsx";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
